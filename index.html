@@ -80,27 +80,6 @@
             color: var(--text-secondary);
             margin-top: 8px;
         }
-        .stats-bar {
-            display: flex;
-            justify-content: space-around;
-            background-color: rgba(0,0,0,0.2);
-            border-radius: var(--radius-md);
-            margin-top: 24px;
-            padding: 16px 8px;
-            border: 1px solid var(--border-color);
-        }
-        .stat-item {
-            text-align: center;
-        }
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent);
-        }
-        .stat-label {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
 
         /* --- タブナビゲーション --- */
         .nav-tabs {
@@ -320,20 +299,6 @@
             <div class="hero-icon"><i class="fab fa-line"></i></div>
             <h1 class="hero-title">公式LINE構築実績</h1>
             <p class="hero-subtitle">ビジネスを加速させるLINE活用事例</p>
-            <div class="stats-bar">
-                <div class="stat-item">
-                    <div class="stat-number" data-count="5">0</div>
-                    <div class="stat-label">構築案件</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" data-count="100">0</div>
-                    <div class="stat-label">顧客満足度 %</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" data-count="90">0</div>
-                    <div class="stat-label">最高既読率 %</div>
-                </div>
-            </div>
         </header>
 
         <nav class="nav-tabs">
@@ -515,41 +480,17 @@
         
         // --- 表示されたら発動するアニメーション ---
         document.addEventListener('DOMContentLoaded', () => {
-            // カウントアップアニメーション
-            const animateCount = (counter) => {
-                const target = +counter.getAttribute('data-count');
-                const duration = 1500; // Animation duration in milliseconds
-                const stepTime = 20; // Time between each step
-                const totalSteps = duration / stepTime;
-                const increment = target / totalSteps;
-                let currentCount = 0;
-
-                const updateCount = () => {
-                    currentCount += increment;
-                    if (currentCount < target) {
-                        counter.innerText = Math.ceil(currentCount);
-                        setTimeout(updateCount, stepTime);
-                    } else {
-                        counter.innerText = target;
-                    }
-                };
-                updateCount();
-            };
-            
             // Intersection Observer for animations
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        if (entry.target.classList.contains('stat-number')) {
-                            animateCount(entry.target);
-                        }
                         // Fade-in animation is handled by CSS, no extra class needed here if it's already on the element.
                         observer.unobserve(entry.target);
                     }
                 });
             }, { threshold: 0.1 });
 
-            document.querySelectorAll('.fade-in-up, .stat-number').forEach(el => {
+            document.querySelectorAll('.fade-in-up').forEach(el => {
                 observer.observe(el);
             });
         });
